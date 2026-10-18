@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>[hidden]{display:none!important}body{margin:0;font-size:14px}</style>
+<title>Anand Sahib – 6 Pauris</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Tiro+Devanagari+Hindi&family=Noto+Sans+Gurmukhi:wght@400;500&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Layout: one reading column, sticky control bar, pauris flow like a gutka page.
+   Toggles are pure CSS (checkboxes + labels) so the page works even where JavaScript is off, e.g. iPhone Files preview. */
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --ink:#18213d; --muted:#5d6584; --line:#dde1ee;
+  --kesri:#d9761c; --kesri-soft:#fbeedf; --navy:#1d2b5c; --on-kesri:#ffffff;
+  --display:"Marcellus", Georgia, serif;
+  --read:"Source Serif 4", Georgia, serif;
+  --hindi:"Tiro Devanagari Hindi", "Kohinoor Devanagari", "Noto Serif Devanagari", serif;
+  --gurmukhi:"Noto Sans Gurmukhi", "Gurmukhi MN", sans-serif;
+  --ui:"Figtree", -apple-system, system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1328; --surface:#161d38; --ink:#eef0f8; --muted:#a3aac6; --line:#28304f;
+  --kesri:#f2a14f; --kesri-soft:#2d2638; --navy:#c9d2f5; --on-kesri:#1a1206; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1328; --surface:#161d38; --ink:#eef0f8; --muted:#a3aac6; --line:#28304f;
+  --kesri:#f2a14f; --kesri-soft:#2d2638; --navy:#c9d2f5; --on-kesri:#1a1206; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--ui);-webkit-text-size-adjust:100%;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+
+.cb{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
+.wrap{--scale:1;max-width:720px;margin:0 auto;padding-block:28px 120px}
+#sz1:checked ~ .wrap{--scale:.88}
+#sz3:checked ~ .wrap{--scale:1.18}
+#sz4:checked ~ .wrap{--scale:1.38}
+
+header.top{display:grid;gap:6px;padding-block:8px 20px}
+.ek{font-family:var(--gurmukhi);color:var(--kesri);font-size:1.05rem}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(2.1rem,6vw,3rem);margin:0;color:var(--navy);text-wrap:balance;line-height:1.1}
+.sub{color:var(--muted);font-size:.95rem;line-height:1.5}
+.sub b{color:var(--ink);font-weight:600}
+
+.listen{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px}
+.btn{font:600 .92rem var(--ui);display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;text-decoration:none}
+.btn.primary{background:var(--kesri);border-color:var(--kesri);color:var(--on-kesri)}
+.btn svg{width:16px;height:16px;flex:none}
+.jsonly{display:none}
+.js .jsonly{display:inline-flex}
+.hint{font-size:.82rem;color:var(--muted);flex-basis:100%}
+.btn:focus-visible,.chip:focus-visible{outline:2px solid var(--kesri);outline-offset:2px}
+.cb:focus-visible ~ .wrap .opts{outline:2px solid var(--kesri);outline-offset:4px;border-radius:8px}
+
+.bar{position:-webkit-sticky;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding-block:10px;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font:600 .85rem var(--ui);min-width:38px;height:34px;padding:0 10px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);display:inline-flex;align-items:center;justify-content:center;text-decoration:none;font-variant-numeric:tabular-nums;box-sizing:border-box}
+.chip.on{background:var(--navy);border-color:var(--navy);color:var(--bg)}
+.opts{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.sizes{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.tog{font:500 .85rem var(--ui);height:34px;padding:0 12px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer;display:inline-flex;align-items:center;box-sizing:border-box;-webkit-user-select:none;user-select:none}
+.tog.sz{border:0;border-radius:0;width:36px;justify-content:center;padding:0}
+.tog sup{font-size:.6em}
+#cbM:checked ~ .wrap #lM, #cbH:checked ~ .wrap #lH, #cbG:checked ~ .wrap #lG,
+#sz1:checked ~ .wrap #l1, #sz2:checked ~ .wrap #l2, #sz3:checked ~ .wrap #l3, #sz4:checked ~ .wrap #l4
+  {background:var(--kesri-soft);border-color:var(--kesri);color:var(--ink)}
+
+.pauri{padding-block:30px 8px;scroll-margin-top:70px}
+.ph{display:flex;align-items:baseline;gap:12px;margin-bottom:14px}
+.num{font-family:var(--display);font-size:1.6rem;color:var(--kesri);font-variant-numeric:tabular-nums}
+.ph h2{font:600 .78rem var(--ui);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0}
+.ph .ang{margin-left:auto;font-size:.78rem;color:var(--muted)}
+.about{display:none;background:var(--kesri-soft);border-radius:10px;padding:12px 14px;font-family:var(--read);font-size:calc(.95rem*var(--scale));line-height:1.55;margin-bottom:14px}
+.about b{font-family:var(--ui);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--kesri);display:block;margin-bottom:2px}
+
+.line{display:grid;gap:4px;padding-block:12px;border-top:1px dashed var(--line)}
+.ph + .about + .line{border-top:0}
+.gm{display:none;font-family:var(--gurmukhi);font-size:calc(1.15rem*var(--scale));color:var(--navy);line-height:1.6}
+.tr{font-family:var(--read);font-size:calc(1.3rem*var(--scale));line-height:1.45;color:var(--ink)}
+.hi{display:none;font-family:var(--hindi);font-size:calc(.98rem*var(--scale));color:var(--muted);line-height:1.6;padding-left:2px}
+.mn{display:none;font-family:var(--read);font-style:italic;font-size:calc(1rem*var(--scale));line-height:1.5;color:var(--ink);border-left:3px solid var(--kesri);padding:2px 0 2px 12px;margin-top:4px}
+.end{font-family:var(--ui);font-size:.8em;color:var(--kesri);font-variant-numeric:tabular-nums;white-space:nowrap}
+#cbM:checked ~ .wrap .mn, #cbM:checked ~ .wrap .about{display:block}
+#cbH:checked ~ .wrap .hi{display:block}
+#cbG:checked ~ .wrap .gm{display:block}
+
+.player{position:fixed;left:0;right:0;bottom:0;z-index:8;background:var(--surface);border-top:1px solid var(--line);
+  padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.player .in{max-width:720px;margin:0 auto;display:flex;flex-direction:column;gap:6px}
+.player .row{display:flex;gap:10px;align-items:center}
+.player .name{font-size:.82rem;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.player audio{width:100%;height:40px}
+.x{border:0;background:none;color:var(--muted);font-size:1.2rem;cursor:pointer;padding:4px 8px}
+
+footer{margin-top:40px;color:var(--muted);font-size:.8rem;line-height:1.6;border-top:1px solid var(--line);padding-top:16px}
+
+.i-pause{display:none}.playing .i-play{display:none}.playing .i-pause{display:block}
+.mini{position:fixed;left:0;right:0;bottom:0;z-index:9;background:var(--surface);border-top:1px solid var(--line);
+  padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.mini .in{max-width:720px;margin:0 auto;display:flex;gap:12px;align-items:center}
+.pp{flex:none;width:46px;height:46px;border-radius:50%;border:0;background:var(--kesri);color:var(--on-kesri);display:grid;place-items:center;cursor:pointer}
+.pp svg{width:22px;height:22px}
+#seek{flex:1;min-width:0;accent-color:var(--kesri)}
+.time{font:500 .8rem var(--ui);color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pp:focus-visible{outline:2px solid var(--kesri);outline-offset:2px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+</head>
+<body>
+<input type="checkbox" class="cb" id="cbM">
+<input type="checkbox" class="cb" id="cbH" checked>
+<input type="checkbox" class="cb" id="cbG">
+<input type="radio" class="cb" name="sz" id="sz1">
+<input type="radio" class="cb" name="sz" id="sz2" checked>
+<input type="radio" class="cb" name="sz" id="sz3">
+<input type="radio" class="cb" name="sz" id="sz4">
+<div class="wrap">
+  <header class="top">
+    <div class="ek">ੴ ਸਤਿਗੁਰ ਪ੍ਰਸਾਦਿ ॥</div>
+    <h1>Anand Sahib</h1>
+    <div class="sub"><b>6 Pauris</b> (1–5 and 40) · Guru Amar Das Ji · Raag Ramkali · Ang 917–922</div>
+    <div class="listen">
+      <button class="btn primary" id="playMain" type="button">
+        <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+        <span id="playLabel">Play audio</span>
+      </button>
+      
+      
+      <span class="hint" id="hint">Tap play, then scroll down to read along. The play bar stays at the bottom.</span>
+    </div>
+  </header>
+
+  <nav class="bar" aria-label="Pauris and display options">
+    <div class="chips"><a class="chip" href="#pauri-1" data-n="1">1</a><a class="chip" href="#pauri-2" data-n="2">2</a><a class="chip" href="#pauri-3" data-n="3">3</a><a class="chip" href="#pauri-4" data-n="4">4</a><a class="chip" href="#pauri-5" data-n="5">5</a><a class="chip" href="#pauri-40" data-n="40">40</a></div>
+    <div class="opts">
+      <label class="tog" for="cbM" id="lM">Meaning</label>
+      <label class="tog" for="cbH" id="lH">हिंदी</label>
+      <label class="tog" for="cbG" id="lG">ਗੁਰਮੁਖੀ</label>
+      <span class="sizes" aria-label="Text size">
+        <label class="tog sz" for="sz1" id="l1">A<sup>−</sup></label><label class="tog sz" for="sz2" id="l2">A</label><label class="tog sz" for="sz3" id="l3">A<sup>+</sup></label><label class="tog sz" for="sz4" id="l4">A<sup>++</sup></label>
+      </span>
+    </div>
+  </nav>
+
+  <main>
+<section class="pauri" id="pauri-1">
+<div class="ph"><span class="num">1</span><h2>Pauri 1</h2><span class="ang">Ang 917</span></div>
+<div class="about"><b>About this pauri</b>Guru Amar Das Ji describes the joy of meeting the True Guru. It comes naturally, the mind fills with celebration, and even the musical measures come to sing God&#x27;s praise.</div>
+<div class="line">
+<div class="gm">ਅਨੰਦੁ ਭਇਆ ਮੇਰੀ ਮਾਏ ਸਤਿਗੁਰੂ ਮੈ ਪਾਇਆ ॥</div>
+<div class="tr">Anand bhaya meri maaye, Satguru main paaya</div>
+<div class="hi">अनंदु भइआ मेरी माए सतिगुरू मै पाइआ ॥</div>
+<div class="mn">O my mother, I am in bliss, because I have found the True Guru.</div>
+</div><div class="line">
+<div class="gm">ਸਤਿਗੁਰੁ ਤ ਪਾਇਆ ਸਹਜ ਸੇਤੀ ਮਨਿ ਵਜੀਆ ਵਾਧਾਈਆ ॥</div>
+<div class="tr">Satguru ta paaya sahaj seti, man vajiyaan vadhaaiyaan</div>
+<div class="hi">सतिगुरु त पाइआ सहज सेती मनि वजीआ वाधाईआ ॥</div>
+<div class="mn">I found the True Guru with natural ease, and songs of celebration ring in my mind.</div>
+</div><div class="line">
+<div class="gm">ਰਾਗ ਰਤਨ ਪਰਵਾਰ ਪਰੀਆ ਸਬਦ ਗਾਵਣ ਆਈਆ ॥</div>
+<div class="tr">Raag ratan parvaar pariyaan, sabad gaavan aaiyaan</div>
+<div class="hi">राग रतन परवार परीआ सबद गावण आईआ ॥</div>
+<div class="mn">The jewel-like ragas and their families have come to sing the Guru&#x27;s Word.</div>
+</div><div class="line">
+<div class="gm">ਸਬਦੋ ਤ ਗਾਵਹੁ ਹਰੀ ਕੇਰਾ ਮਨਿ ਜਿਨੀ ਵਸਾਇਆ ॥</div>
+<div class="tr">Sabado ta gaavo Hari kera, man jini vasaaya</div>
+<div class="hi">सबदो त गावहु हरी केरा मनि जिनी वसाइआ ॥</div>
+<div class="mn">Those who have placed the Lord in their mind, sing the Word of the Lord.</div>
+</div><div class="line">
+<div class="gm">ਕਹੈ ਨਾਨਕੁ ਅਨੰਦੁ ਹੋਆ ਸਤਿਗੁਰੂ ਮੈ ਪਾਇਆ ॥੧॥</div>
+<div class="tr">Kahai Nanak anand hoya, Satguru main paaya <span class="end">‖1‖</span></div>
+<div class="hi">कहै नानकु अनंदु होआ सतिगुरू मै पाइआ ॥१॥</div>
+<div class="mn">Says Nanak, I am in bliss, because I have found the True Guru.</div>
+</div>
+</section><section class="pauri" id="pauri-2">
+<div class="ph"><span class="num">2</span><h2>Pauri 2</h2><span class="ang">Ang 917</span></div>
+<div class="about"><b>About this pauri</b>The Guru speaks to his own mind: stay with God always. God takes away pain, accepts you as His own, and sets every task right, so why forget Him?</div>
+<div class="line">
+<div class="gm">ਏ ਮਨ ਮੇਰਿਆ ਤੂ ਸਦਾ ਰਹੁ ਹਰਿ ਨਾਲੇ ॥</div>
+<div class="tr">Ae man meriya, tu sada rahu Har naale</div>
+<div class="hi">ए मन मेरिआ तू सदा रहु हरि नाले ॥</div>
+<div class="mn">O my mind, always stay with the Lord.</div>
+</div><div class="line">
+<div class="gm">ਹਰਿ ਨਾਲਿ ਰਹੁ ਤੂ ਮੰਨ ਮੇਰੇ ਦੂਖ ਸਭਿ ਵਿਸਾਰਣਾ ॥</div>
+<div class="tr">Har naal rahu tu mann mere, dookh sabh visaarna</div>
+<div class="hi">हरि नालि रहु तू मंन मेरे दूख सभि विसारणा ॥</div>
+<div class="mn">Stay with the Lord, O my mind, and He will make all your sorrows disappear.</div>
+</div><div class="line">
+<div class="gm">ਅੰਗੀਕਾਰੁ ਓਹੁ ਕਰੇ ਤੇਰਾ ਕਾਰਜ ਸਭਿ ਸਵਾਰਣਾ ॥</div>
+<div class="tr">Angeekaar oh kare tera, kaaraj sabh savaarna</div>
+<div class="hi">अंगीकारु ओहु करे तेरा कारज सभि सवारणा ॥</div>
+<div class="mn">He will accept you as His own and set all your affairs right.</div>
+</div><div class="line">
+<div class="gm">ਸਭਨਾ ਗਲਾ ਸਮਰਥੁ ਸੁਆਮੀ ਸੋ ਕਿਉ ਮਨਹੁ ਵਿਸਾਰੇ ॥</div>
+<div class="tr">Sabhna gala samrath suaami, so kiyon manahu visaare</div>
+<div class="hi">सभना गला समरथु सुआमी सो किउ मनहु विसारे ॥</div>
+<div class="mn">The Master is able to do all things. Why would you forget Him from your mind?</div>
+</div><div class="line">
+<div class="gm">ਕਹੈ ਨਾਨਕੁ ਮੰਨ ਮੇਰੇ ਸਦਾ ਰਹੁ ਹਰਿ ਨਾਲੇ ॥੨॥</div>
+<div class="tr">Kahai Nanak mann mere, sada rahu Har naale <span class="end">‖2‖</span></div>
+<div class="hi">कहै नानकु मंन मेरे सदा रहु हरि नाले ॥२॥</div>
+<div class="mn">Says Nanak, O my mind, always stay with the Lord.</div>
+</div>
+</section><section class="pauri" id="pauri-3">
+<div class="ph"><span class="num">3</span><h2>Pauri 3</h2><span class="ang">Ang 917</span></div>
+<div class="about"><b>About this pauri</b>God&#x27;s treasury holds everything, and it is given by His grace. Those who keep the Name in their heart live in constant praise, and the divine Word resounds within them.</div>
+<div class="line">
+<div class="gm">ਸਾਚੇ ਸਾਹਿਬਾ ਕਿਆ ਨਾਹੀ ਘਰਿ ਤੇਰੈ ॥</div>
+<div class="tr">Saache saahiba, kya naahi ghar terai</div>
+<div class="hi">साचे साहिबा किआ नाही घरि तेरै ॥</div>
+<div class="mn">O True Master, what is there that is not in Your home?</div>
+</div><div class="line">
+<div class="gm">ਘਰਿ ਤ ਤੇਰੈ ਸਭੁ ਕਿਛੁ ਹੈ ਜਿਸੁ ਦੇਹਿ ਸੁ ਪਾਵਏ ॥</div>
+<div class="tr">Ghar ta terai sabh kichh hai, jis dehi so paavae</div>
+<div class="hi">घरि त तेरै सभु किछु है जिसु देहि सु पावए ॥</div>
+<div class="mn">Everything is in Your home. Only the one You give to receives it.</div>
+</div><div class="line">
+<div class="gm">ਸਦਾ ਸਿਫਤਿ ਸਲਾਹ ਤੇਰੀ ਨਾਮੁ ਮਨਿ ਵਸਾਵਏ ॥</div>
+<div class="tr">Sada sifat salaah teri, naam man vasaavae</div>
+<div class="hi">सदा सिफति सलाह तेरी नामु मनि वसावए ॥</div>
+<div class="mn">That person sings Your praises forever and keeps Your Name in the mind.</div>
+</div><div class="line">
+<div class="gm">ਨਾਮੁ ਜਿਨ ਕੈ ਮਨਿ ਵਸਿਆ ਵਾਜੇ ਸਬਦ ਘਨੇਰੇ ॥</div>
+<div class="tr">Naam jin kai man vasiya, vaaje sabad ghanere</div>
+<div class="hi">नामु जिन कै मनि वसिआ वाजे सबद घनेरे ॥</div>
+<div class="mn">In those whose mind the Name lives, the divine music of the Word plays abundantly.</div>
+</div><div class="line">
+<div class="gm">ਕਹੈ ਨਾਨਕੁ ਸਚੇ ਸਾਹਿਬ ਕਿਆ ਨਾਹੀ ਘਰਿ ਤੇਰੈ ॥੩॥</div>
+<div class="tr">Kahai Nanak sache saahib, kya naahi ghar terai <span class="end">‖3‖</span></div>
+<div class="hi">कहै नानकु सचे साहिब किआ नाही घरि तेरै ॥३॥</div>
+<div class="mn">Says Nanak, O True Master, what is there that is not in Your home?</div>
+</div>
+</section><section class="pauri" id="pauri-4">
+<div class="ph"><span class="num">4</span><h2>Pauri 4</h2><span class="ang">Ang 917</span></div>
+<div class="about"><b>About this pauri</b>The True Name is the Guru&#x27;s support. It ends every hunger, brings peace, and fulfils every wish. The Guru calls the saints to love the Word.</div>
+<div class="line">
+<div class="gm">ਸਾਚਾ ਨਾਮੁ ਮੇਰਾ ਆਧਾਰੋ ॥</div>
+<div class="tr">Saacha naam mera aadhaaro</div>
+<div class="hi">साचा नामु मेरा आधारो ॥</div>
+<div class="mn">The True Name is my support.</div>
+</div><div class="line">
+<div class="gm">ਸਾਚੁ ਨਾਮੁ ਅਧਾਰੁ ਮੇਰਾ ਜਿਨਿ ਭੁਖਾ ਸਭਿ ਗਵਾਈਆ ॥</div>
+<div class="tr">Saach naam adhaar mera, jin bhukha sabh gavaaiyaan</div>
+<div class="hi">साचु नामु अधारु मेरा जिनि भुखा सभि गवाईआ ॥</div>
+<div class="mn">The True Name is my support. It has taken away all my hunger and craving.</div>
+</div><div class="line">
+<div class="gm">ਕਰਿ ਸਾਂਤਿ ਸੁਖ ਮਨਿ ਆਇ ਵਸਿਆ ਜਿਨਿ ਇਛਾ ਸਭਿ ਪੁਜਾਈਆ ॥</div>
+<div class="tr">Kar saant sukh man aae vasiya, jin ichha sabh pujaaiyaan</div>
+<div class="hi">करि सांति सुख मनि आइ वसिआ जिनि इछा सभि पुजाईआ ॥</div>
+<div class="mn">It has come to live in my mind, bringing peace and calm, and has fulfilled all my wishes.</div>
+</div><div class="line">
+<div class="gm">ਸਦਾ ਕੁਰਬਾਣੁ ਕੀਤਾ ਗੁਰੂ ਵਿਟਹੁ ਜਿਸ ਦੀਆ ਏਹਿ ਵਡਿਆਈਆ ॥</div>
+<div class="tr">Sada kurbaan keeta guru vittahu, jis diyaan ehi vadiaaiyaan</div>
+<div class="hi">सदा कुरबाणु कीता गुरू विटहु जिस दीआ एहि वडिआईआ ॥</div>
+<div class="mn">I am forever devoted to the Guru, to whom all this greatness belongs.</div>
+</div><div class="line">
+<div class="gm">ਕਹੈ ਨਾਨਕੁ ਸੁਣਹੁ ਸੰਤਹੁ ਸਬਦਿ ਧਰਹੁ ਪਿਆਰੋ ॥</div>
+<div class="tr">Kahai Nanak sunahu santahu, sabad dharahu piaaro</div>
+<div class="hi">कहै नानकु सुणहु संतहु सबदि धरहु पिआरो ॥</div>
+<div class="mn">Says Nanak, listen, O saints: hold love for the Guru&#x27;s Word.</div>
+</div><div class="line">
+<div class="gm">ਸਾਚਾ ਨਾਮੁ ਮੇਰਾ ਆਧਾਰੋ ॥੪॥</div>
+<div class="tr">Saacha naam mera aadhaaro <span class="end">‖4‖</span></div>
+<div class="hi">साचा नामु मेरा आधारो ॥४॥</div>
+<div class="mn">The True Name is my support.</div>
+</div>
+</section><section class="pauri" id="pauri-5">
+<div class="ph"><span class="num">5</span><h2>Pauri 5</h2><span class="ang">Ang 917</span></div>
+<div class="about"><b>About this pauri</b>In a blessed heart where God has placed His power, divine music plays. The five vices are brought under control, the fear of death is gone, and there is lasting peace.</div>
+<div class="line">
+<div class="gm">ਵਾਜੇ ਪੰਚ ਸਬਦ ਤਿਤੁ ਘਰਿ ਸਭਾਗੈ ॥</div>
+<div class="tr">Vaaje panch sabad, tit ghar sabhaagai</div>
+<div class="hi">वाजे पंच सबद तितु घरि सभागै ॥</div>
+<div class="mn">The five kinds of divine music play in that fortunate home (heart).</div>
+</div><div class="line">
+<div class="gm">ਘਰਿ ਸਭਾਗੈ ਸਬਦ ਵਾਜੇ ਕਲਾ ਜਿਤੁ ਘਰਿ ਧਾਰੀਆ ॥</div>
+<div class="tr">Ghar sabhaagai sabad vaaje, kala jit ghar dhaariya</div>
+<div class="hi">घरि सभागै सबद वाजे कला जितु घरि धारीआ ॥</div>
+<div class="mn">The Word plays in that fortunate home, where You, Lord, have placed Your power.</div>
+</div><div class="line">
+<div class="gm">ਪੰਚ ਦੂਤ ਤੁਧੁ ਵਸਿ ਕੀਤੇ ਕਾਲੁ ਕੰਟਕੁ ਮਾਰਿਆ ॥</div>
+<div class="tr">Panch doot tudh vas keete, kaal kantak maariya</div>
+<div class="hi">पंच दूत तुधु वसि कीते कालु कंटकु मारिआ ॥</div>
+<div class="mn">You have brought the five thieves (lust, anger, greed, attachment and ego) under control, and destroyed the torment of death.</div>
+</div><div class="line">
+<div class="gm">ਧੁਰਿ ਕਰਮਿ ਪਾਇਆ ਤੁਧੁ ਜਿਨ ਕਉ ਸਿ ਨਾਮਿ ਹਰਿ ਕੈ ਲਾਗੇ ॥</div>
+<div class="tr">Dhur karam paaya tudh jin kau, se naam Har kai laage</div>
+<div class="hi">धुरि करमि पाइआ तुधु जिन कउ सि नामि हरि कै लागे ॥</div>
+<div class="mn">Those blessed by Your grace from the very beginning become attached to the Lord&#x27;s Name.</div>
+</div><div class="line">
+<div class="gm">ਕਹੈ ਨਾਨਕੁ ਤਹ ਸੁਖੁ ਹੋਆ ਤਿਤੁ ਘਰਿ ਅਨਹਦ ਵਾਜੇ ॥੫॥</div>
+<div class="tr">Kahai Nanak tah sukh hoya, tit ghar anhad vaaje <span class="end">‖5‖</span></div>
+<div class="hi">कहै नानकु तह सुखु होआ तितु घरि अनहद वाजे ॥५॥</div>
+<div class="mn">Says Nanak, there is peace there, and the endless divine melody plays in that home.</div>
+</div>
+</section><section class="pauri" id="pauri-40">
+<div class="ph"><span class="num">40</span><h2>Pauri 40</h2><span class="ang">Ang 922</span></div>
+<div class="about"><b>About this pauri</b>The closing pauri. Listening to this song of bliss fulfils every wish and removes pain and sorrow. Those who hear it and speak it become pure, and the Guru is seen everywhere.</div>
+<div class="line">
+<div class="gm">ਅਨਦੁ ਸੁਣਹੁ ਵਡਭਾਗੀਹੋ ਸਗਲ ਮਨੋਰਥ ਪੂਰੇ ॥</div>
+<div class="tr">Anad sunahu vadbhaageeho, sagal manorath poore</div>
+<div class="hi">अनदु सुणहु वडभागीहो सगल मनोरथ पूरे ॥</div>
+<div class="mn">Listen to this song of bliss, O fortunate ones, and all your wishes will be fulfilled.</div>
+</div><div class="line">
+<div class="gm">ਪਾਰਬ੍ਰਹਮੁ ਪ੍ਰਭੁ ਪਾਇਆ ਉਤਰੇ ਸਗਲ ਵਿਸੂਰੇ ॥</div>
+<div class="tr">Paarbraham prabh paaya, utre sagal visoore</div>
+<div class="hi">पारब्रहमु प्रभु पाइआ उतरे सगल विसूरे ॥</div>
+<div class="mn">I have found the Supreme Lord God, and all my worries are gone.</div>
+</div><div class="line">
+<div class="gm">ਦੂਖ ਰੋਗ ਸੰਤਾਪ ਉਤਰੇ ਸੁਣੀ ਸਚੀ ਬਾਣੀ ॥</div>
+<div class="tr">Dookh rog santaap utre, suni sachi baani</div>
+<div class="hi">दूख रोग संताप उतरे सुणी सची बाणी ॥</div>
+<div class="mn">Pain, illness and suffering have left, by listening to the True Bani.</div>
+</div><div class="line">
+<div class="gm">ਸੰਤ ਸਾਜਨ ਭਏ ਸਰਸੇ ਪੂਰੇ ਗੁਰ ਤੇ ਜਾਣੀ ॥</div>
+<div class="tr">Sant saajan bhae sarse, poore gur te jaani</div>
+<div class="hi">संत साजन भए सरसे पूरे गुर ते जाणी ॥</div>
+<div class="mn">The saints and friends are filled with joy, having come to know it through the Perfect Guru.</div>
+</div><div class="line">
+<div class="gm">ਸੁਣਤੇ ਪੁਨੀਤ ਕਹਤੇ ਪਵਿਤੁ ਸਤਿਗੁਰੁ ਰਹਿਆ ਭਰਪੂਰੇ ॥</div>
+<div class="tr">Sunte puneet kahte pavit, Satguru rahiya bharpoore</div>
+<div class="hi">सुणते पुनीत कहते पवितु सतिगुरु रहिआ भरपूरे ॥</div>
+<div class="mn">Pure are those who listen, and pure are those who recite. The True Guru is present everywhere.</div>
+</div><div class="line">
+<div class="gm">ਬਿਨਵੰਤਿ ਨਾਨਕੁ ਗੁਰ ਚਰਣ ਲਾਗੇ ਵਾਜੇ ਅਨਹਦ ਤੂਰੇ ॥੪੦॥੧॥</div>
+<div class="tr">Binvant Nanak gur charan laage, vaaje anhad toore <span class="end">‖40‖1‖</span></div>
+<div class="hi">बिनवंति नानकु गुर चरण लागे वाजे अनहद तूरे ॥४०॥१॥</div>
+<div class="mn">Nanak prays: for those who hold on to the Guru&#x27;s feet, the endless divine music plays.</div>
+</div>
+</section>
+  </main>
+
+  <footer>
+    Ramkali Mahala 3, Anand. These six pauris are recited in Rehras Sahib and at the close of Sikh gatherings.
+    The English lines show the words as they are recited. Meanings are simple explanations to help you understand each line; for deeper study, Prof. Sahib Singh's Teeka is a trusted source.
+  </footer>
+</div>
+
+<audio id="audio" src="audio/anand-sahib.mp3" preload="metadata"></audio>
+<div class="mini" id="mini" hidden>
+  <div class="in">
+    <button class="pp" id="pp" type="button" aria-label="Play">
+      <svg class="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
+    </button>
+    <input type="range" id="seek" min="0" max="1000" step="1" value="0" aria-label="Seek">
+    <span class="time" id="time">0:00</span>
+  </div>
+</div>
+<script>
+document.documentElement.classList.add("js");
+(function(){
+  const K = "anand6:";
+  const get = k => { try { return localStorage.getItem(K+k); } catch(e) { return null; } };
+  const set = (k,v) => { try { localStorage.setItem(K+k, v); } catch(e) {} };
+  ["cbM","cbH","cbG"].forEach(id => {
+    const el = document.getElementById(id), v = get(id);
+    if (v !== null) el.checked = v === "1";
+    el.addEventListener("change", () => set(id, el.checked ? "1" : "0"));
+  });
+  const sz = get("sz"); if (sz && document.getElementById(sz)) document.getElementById(sz).checked = true;
+  document.querySelectorAll('input[name="sz"]').forEach(r => r.addEventListener("change", () => set("sz", r.id)));
+
+  const chips = document.querySelectorAll(".chip");
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(es => es.forEach(en => {
+      if (en.isIntersecting) { const n = en.target.id.split("-")[1]; chips.forEach(c => c.classList.toggle("on", c.dataset.n === n)); }
+    }), {rootMargin:"-30% 0px -60% 0px"});
+    document.querySelectorAll(".pauri").forEach(s => io.observe(s));
+  }
+
+  const audio = document.getElementById("audio"), mini = document.getElementById("mini");
+  const pp = document.getElementById("pp"), main = document.getElementById("playMain"), label = document.getElementById("playLabel");
+  const seek = document.getElementById("seek"), time = document.getElementById("time"), hint = document.getElementById("hint");
+  let dragging = false;
+  const fmt = s => { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s/60) + ":" + String(s%60).padStart(2, "0"); };
+  const toggle = () => {
+    if (audio.paused) {
+      audio.play().catch(() => { hint.textContent = "Couldn't play the audio. Check that audio/anand-sahib.mp3 is in the repository."; });
+    } else audio.pause();
+  };
+  main.addEventListener("click", toggle);
+  pp.addEventListener("click", toggle);
+  const sync = () => {
+    const on = !audio.paused;
+    [main, pp].forEach(b => b.classList.toggle("playing", on));
+    pp.setAttribute("aria-label", on ? "Pause" : "Play");
+    label.textContent = on ? "Pause audio" : (audio.currentTime > 0 ? "Resume audio" : "Play audio");
+    if (on) { mini.hidden = false; document.body.style.paddingBottom = "80px"; }
+  };
+  audio.addEventListener("play", sync);
+  audio.addEventListener("pause", sync);
+  audio.addEventListener("ended", () => { audio.currentTime = 0; sync(); });
+  audio.addEventListener("timeupdate", () => {
+    if (!dragging && audio.duration) seek.value = Math.round(audio.currentTime / audio.duration * 1000);
+    time.textContent = fmt(audio.currentTime) + " / " + fmt(audio.duration);
+  });
+  seek.addEventListener("input", () => { dragging = true; if (audio.duration) time.textContent = fmt(audio.duration * seek.value / 1000) + " / " + fmt(audio.duration); });
+  seek.addEventListener("change", () => { if (audio.duration) audio.currentTime = audio.duration * seek.value / 1000; dragging = false; });
+})();
+</script>
+</body>
+</html>
